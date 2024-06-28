@@ -18,11 +18,11 @@ repositories {
 }
 
 dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
 	runtimeOnly group: 'com.oracle.database.security', name: 'oraclepki', version: '23.4.0.24.05'
 	runtimeOnly group: 'com.oracle.database.jdbc', name: 'ojdbc11', version: '23.4.0.24.05'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	runtimeOnly group: 'com.h2database', name: 'h2', version: '2.2.224'
 }
 
 tasks.named('test') {
