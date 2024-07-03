@@ -1,0 +1,32 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.3.1'
+	id 'io.spring.dependency-management' version '1.1.5'
+}
+
+group = 'com.erichsteiger.example.jpa'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	runtimeOnly group: 'com.oracle.database.security', name: 'oraclepki', version: '23.4.0.24.05'
+	runtimeOnly group: 'com.oracle.database.jdbc', name: 'ojdbc11', version: '23.4.0.24.05'
+	runtimeOnly group: 'com.h2database', name: 'h2', version: '2.2.224'
+	runtimeOnly 'org.postgresql:postgresql'
+	runtimeOnly group: 'com.mysql', name: 'mysql-connector-j', version: '8.4.0'
+
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
