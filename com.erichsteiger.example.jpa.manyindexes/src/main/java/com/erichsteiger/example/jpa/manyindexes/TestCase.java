@@ -1,4 +1,4 @@
-package com.erichsteiger.example.manyindexes;
+package com.erichsteiger.example.jpa.manyindexes;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.erichsteiger.example.manyindexes.statistics.Statistics;
+import com.erichsteiger.example.jpa.manyindexes.statistics.Statistics;
 
 @Service
 public class TestCase {
@@ -20,7 +20,8 @@ public class TestCase {
   private ManyIndexTestDAO1 dao1;
   @Autowired
   private ManyIndexTestDAO2 dao2;
-  private Statistics statistics = new Statistics();
+  @Autowired
+  private Statistics statistics;
   private Random random = new Random();
 
   public void run() {
@@ -32,11 +33,11 @@ public class TestCase {
       testUpdatetWithIndexes();
       testUpdateWithoutIndexes();
     }
-    statistics.print();
   }
 
   private void testUpdatetWithIndexes() {
-    List<ManyIndexTestBO1> all = dao1.findByState(0);
+    List<ManyIndexTestBO1> all = dao1.findByStateAndModificationUserId(0,
+        "Thread" + Thread.currentThread().getId());
     LOGGER.debug("starting update {} rows", all.size());
     LocalDateTime startTime = LocalDateTime.now();
     for (ManyIndexTestBO1 bo : all) {
@@ -58,7 +59,8 @@ public class TestCase {
   }
 
   private void testUpdateWithoutIndexes() {
-    List<ManyIndexTestBO2> all = dao2.findByState(0);
+    List<ManyIndexTestBO2> all = dao2.findByStateAndModificationUserId(0,
+        "Thread" + Thread.currentThread().getId());
     LOGGER.debug("starting update {} rows", all.size());
     LocalDateTime startTime = LocalDateTime.now();
     for (ManyIndexTestBO2 bo : all) {
@@ -88,13 +90,13 @@ public class TestCase {
       dao1.save(bo2);
 
     }
-    List<ManyIndexTestBO1> all = dao1.findByState(0);
+    List<ManyIndexTestBO1> all = dao1.findByStateAndModificationUserId(0, "Thread" + Thread.currentThread().getId());
     for (ManyIndexTestBO1 bo : all) {
       updateBO(bo);
       dao1.save(bo);
     }
 
-    List<ManyIndexTestBO2> all2 = dao2.findByState(0);
+    List<ManyIndexTestBO2> all2 = dao2.findByStateAndModificationUserId(0, "Thread" + Thread.currentThread().getId());
     for (ManyIndexTestBO2 bo : all2) {
       updateBO(bo);
       dao2.save(bo);
@@ -109,6 +111,7 @@ public class TestCase {
       bo.setLastName("" + UUID.randomUUID());
       bo.setCreationTs(LocalDateTime.now());
       bo.setModificationTs(LocalDateTime.now());
+      bo.setModificationUserId("Thread" + Thread.currentThread().getId());
       bo.setState(0);
       dao2.save(bo);
     }
@@ -124,6 +127,7 @@ public class TestCase {
       bo.setLastName("" + UUID.randomUUID());
       bo.setCreationTs(LocalDateTime.now());
       bo.setModificationTs(LocalDateTime.now());
+      bo.setModificationUserId("Thread" + Thread.currentThread().getId());
       bo.setState(0);
       dao1.save(bo);
     }

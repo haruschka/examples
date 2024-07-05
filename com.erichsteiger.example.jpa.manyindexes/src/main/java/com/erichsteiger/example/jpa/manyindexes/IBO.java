@@ -1,4 +1,4 @@
-package com.erichsteiger.example.manyindexes;
+package com.erichsteiger.example.jpa.manyindexes;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

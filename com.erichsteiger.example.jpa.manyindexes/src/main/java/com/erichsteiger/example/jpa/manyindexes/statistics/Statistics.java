@@ -1,4 +1,4 @@
-package com.erichsteiger.example.manyindexes.statistics;
+package com.erichsteiger.example.jpa.manyindexes.statistics;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,7 +7,9 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
+@Service
 public class Statistics {
   private static final Logger LOGGER = LoggerFactory.getLogger(Statistics.class);
   private Map<String, List<Long>> stats = new HashMap<>();

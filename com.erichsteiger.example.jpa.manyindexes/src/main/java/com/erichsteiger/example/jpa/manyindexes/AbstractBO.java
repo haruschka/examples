@@ -1,33 +1,22 @@
-package com.erichsteiger.example.manyindexes;
+package com.erichsteiger.example.jpa.manyindexes;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Index;
-import jakarta.persistence.Table;
+import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Version;
 
-@Entity
-@Table(indexes = {
-    @Index(columnList = "firstName"),
-    @Index(columnList = "lastName"),
-    @Index(columnList = "creationTs"),
-    @Index(columnList = "modificationTs"),
-    @Index(columnList = "state"),
-    @Index(columnList = "street"),
-    @Index(columnList = "postalCode"),
-    @Index(columnList = "postalCode,state,city"),
-    @Index(columnList = "postalCode,modificationTs,city"),
-    @Index(columnList = "postalCode,city"),
-    @Index(columnList = "lastName,firstName") })
-public class ManyIndexTestBO2 implements IBO {
+@MappedSuperclass
+public abstract class AbstractBO implements IBO {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
+  @Version
+  private Long version;
+
   private String firstName;
   private String lastName;
   private LocalDateTime creationTs;
@@ -36,8 +25,7 @@ public class ManyIndexTestBO2 implements IBO {
   private String street;
   private String postalCode;
   private String city;
-  @Version
-  private Long version;
+  private String modificationUserId;
 
   public UUID getId() {
     return id;
@@ -109,5 +97,13 @@ public class ManyIndexTestBO2 implements IBO {
 
   public void setCity(String city) {
     this.city = city;
+  }
+
+  public String getModificationUserId() {
+    return modificationUserId;
+  }
+
+  public void setModificationUserId(String modificationUserId) {
+    this.modificationUserId = modificationUserId;
   }
 }
