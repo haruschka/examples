@@ -25,4 +25,4 @@ Start InsertWithoutSelectApplication
 ### Additional Links
 These additional references should also help you:
 
-* (https://medium.com/predictly-on-tech/insert-without-select-using-jpa-a88e5db46e85)
+* https://medium.com/predictly-on-tech/insert-without-select-using-jpa-a88e5db46e85

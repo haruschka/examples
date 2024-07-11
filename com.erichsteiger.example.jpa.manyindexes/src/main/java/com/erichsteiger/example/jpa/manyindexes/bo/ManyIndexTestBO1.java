@@ -1,4 +1,4 @@
-package com.erichsteiger.example.jpa.manyindexes;
+package com.erichsteiger.example.jpa.manyindexes.bo;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

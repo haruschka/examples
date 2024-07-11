@@ -1,4 +1,4 @@
-package com.erichsteiger.example.jpa.manyindexes;
+package com.erichsteiger.example.jpa.manyindexes.bo;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Index;
@@ -18,6 +18,6 @@ import jakarta.persistence.Table;
     @Index(columnList = "postalCode,city"),
     @Index(columnList = "lastName,firstName"),
     @Index(columnList = "state,modificationUserId")})
-public class ManyIndexTestBO2 extends AbstractBO {
+public class ManyIndexTestBO3 extends AbstractBO {
  
 }

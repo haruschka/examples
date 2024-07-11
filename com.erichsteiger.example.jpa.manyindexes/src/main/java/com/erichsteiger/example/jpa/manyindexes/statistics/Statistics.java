@@ -1,6 +1,7 @@
 package com.erichsteiger.example.jpa.manyindexes.statistics;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,11 +16,13 @@ public class Statistics {
   private Map<String, List<Long>> stats = new HashMap<>();
 
   public void addStats(String string, long duration) {
-    if (stats.containsKey(string)) {
-      stats.get(string).add(duration);
-    } else {
-      stats.put(string, new ArrayList<>());
-      stats.get(string).add(duration);
+    synchronized (stats) {
+      if (stats.containsKey(string)) {
+        stats.get(string).add(duration);
+      } else {
+        stats.put(string, new ArrayList<>());
+        stats.get(string).add(duration);
+      }
     }
   }
 
